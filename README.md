@@ -1,8 +1,6 @@
 # Unity_RemoteCommand
 
-Make Unity's window transparent and overlay on desktop.
-
-![](https://github.com/XJINE/Unity_RemoteCommand/blob/master/screenshot.png)
+``RemoteCommand`` provides a simple logic to execute your methods from remote.
 
 ## Import to Your Project
 
@@ -29,8 +27,39 @@ public void SampleCommand()
 }
 ```
 
-Then, call `` RemoteCommander.Command() ``
+Then, call ``RemoteCommander.Command()`` with id.
 
+```csharp
+RemoteCommander.Instance.Command(1);
+```
 
-### Clear Color Settings
+That's all.
 
+### Various Types
+
+``RemoteCommand`` attribute is valid for ``public``, ``private``, ``protected`` and ``static`` methods.
+
+```csharp
+[RemoteCommand(ID = 2)]
+private void SampleCommandPrivate(){}
+
+[RemoteCommand(ID = 3)]
+public static void SampleCommandStatic(){}
+```
+
+### Args and Return Value
+
+Command method can set some args and we can get the return value from it.
+
+```csharp
+[RemoteCommand(ID = 1)]
+public float SampleCommandArgsReturn(int ivalue, float fvalue)
+{
+    Debug.Log("SampleCommandReturn " + ivalue + ", " + fvalue);
+    return Random.value;
+}
+
+…
+
+object randomValue = RemoteCommander.Instance.Command(1, 999, 3.14f)
+```
