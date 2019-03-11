@@ -10,8 +10,8 @@ public class SampleA : MonoBehaviour
 
         RemoteCommander.Instance.Command(0);
 
-        object randomValue = RemoteCommander.Instance.Command(1, 999, 3.14f) ?? -1;
-        Debug.Log(randomValue);
+        object sum = RemoteCommander.Instance.Command(1, 999, 3.14f) ?? -1;
+        Debug.Log(sum);
 
         RemoteCommander.Instance.Command(2);
 
@@ -44,7 +44,7 @@ public class SampleA : MonoBehaviour
     public float SampleCommandArgsReturn(int ivalue, float fvalue)
     {
         Debug.Log("SampleCommandReturn " + ivalue + ", " + fvalue);
-        return Random.value;
+        return ivalue + fvalue;
     }
 
     [RemoteCommand(ID = 2)]
