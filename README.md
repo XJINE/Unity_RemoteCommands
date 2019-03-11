@@ -13,7 +13,7 @@ You can import this asset from UnityPackage.
 You have to import following assets to use this asset.
 
 - [Unity_SingletonMonoBehaviour](https://github.com/XJINE/Unity_SingletonMonoBehaviour)
-- [IInitializable](https://github.com/XJINE/Unity_IInitializable)
+- [Unity_IInitializable](https://github.com/XJINE/Unity_IInitializable)
 
 ## How to Use
 
@@ -63,3 +63,8 @@ public float SampleCommandArgsReturn(int ivalue, float fvalue)
 
 object randomValue = RemoteCommander.Instance.Command(1, 999, 3.14f)
 ```
+
+## Limitation
+
+- ``RemoteCommand`` must be declared in ``MonoBehaviour`` (or that inheritance).
+- ``RemoteCommand.ID`` is must be unique in your scene.
