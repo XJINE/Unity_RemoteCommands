@@ -13,7 +13,7 @@ You can import this asset from UnityPackage.
 You have to import following assets to use this asset.
 
 - [Unity_SingletonMonoBehaviour](https://github.com/XJINE/Unity_SingletonMonoBehaviour)
-- [IInitializable](https://github.com/XJINE/Unity_IInitializable)
+- [Unity_IInitializable](https://github.com/XJINE/Unity_IInitializable)
 
 ## How to Use
 
@@ -30,7 +30,7 @@ public void SampleCommand()
 Then, call ``RemoteCommander.Command()`` with id.
 
 ```csharp
-RemoteCommander.Instance.Command(1);
+RemoteCommander.Instance.Command(0);
 ```
 
 That's all.
@@ -56,10 +56,15 @@ Command method can set some args and we can get the return value from it.
 public float SampleCommandArgsReturn(int ivalue, float fvalue)
 {
     Debug.Log("SampleCommandReturn " + ivalue + ", " + fvalue);
-    return Random.value;
+    return ivalue + fvalue;
 }
 
 …
 
-object randomValue = RemoteCommander.Instance.Command(1, 999, 3.14f)
+object sum = RemoteCommander.Instance.Command(1, 999, 3.14f)
 ```
+
+## Limitation
+
+- ``RemoteCommand`` must be declared in ``MonoBehaviour`` (or that inheritance).
+- ``RemoteCommand.ID`` is must be unique in your scene.
