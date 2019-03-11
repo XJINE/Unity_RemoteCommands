@@ -19,8 +19,17 @@ You have to import following assets to use this asset.
 
 ## How to Use
 
+Set ``RemoteCommand`` attribute and the unique id.
 
+```csharp
+[RemoteCommand(ID = 0)]
+public void SampleCommand()
+{
+    Debug.Log("SampleCommand");
+}
+```
 
+Then, call `` RemoteCommander.Command() ``
 
 
 ### Clear Color Settings
