@@ -49,7 +49,7 @@ public static void SampleCommandStatic(){}
 
 ### Args and Return Value
 
-Command method can set some args and we can get the return value from it.
+``Command`` method can set some args and we can get the return value.
 
 ```csharp
 [RemoteCommand(ID = 1)]
@@ -58,13 +58,39 @@ public float SampleCommandArgsReturn(int ivalue, float fvalue)
     Debug.Log("SampleCommandReturn " + ivalue + ", " + fvalue);
     return ivalue + fvalue;
 }
-
 …
-
-object sum = RemoteCommander.Instance.Command(1, 999, 3.14f)
+object sum = RemoteCommander.Instance.Command(1, 999, 3.14f);
 ```
 
 ## Limitation
 
-- ``RemoteCommand`` must be declared in ``MonoBehaviour`` (or that inheritance).
-- ``RemoteCommand.ID`` is must be unique in your scene.
+``RemoteCommand`` must be declared in ``MonoBehaviour`` (or that inheritance).
+And the instances are must be in the scene before the start.
+
+``RemoteCommand.ID`` is must be unique in your scene.
+
+### Override
+
+```csharp
+public class SampleA : MonoBehaviour
+{
+    [RemoteCommand(ID = 4)]
+    public virtual void SampleCommandOverride()
+    {
+        Debug.Log("SampleA.SampleCommandOverride");
+    }
+}
+public class SampleB : SampleA
+{
+    [RemoteCommand(ID = 5)]
+    public override void SampleCommandOverride()
+    {
+        Debug.Log("SampleB.SampleCommandOverride");
+    }
+}
+…
+RemoteCommander.Instance.Command(4);
+RemoteCommander.Instance.Command(5);
+```
+
+When the ``Command(4)`` and ``Command(5)`` invoked with ``SampleB`` instance, it shows same result.
