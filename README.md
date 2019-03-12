@@ -93,4 +93,4 @@ RemoteCommander.Instance.Command(4);
 RemoteCommander.Instance.Command(5);
 ```
 
-When the ``Command(4)`` and ``Command(5)`` invoked with ``SampleB`` instance, it shows same result.
+When the Command(4) and Command(5) are invoked with SampleB, it shows the same result.
