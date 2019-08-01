@@ -28,6 +28,8 @@ public class RemoteCommander : SingletonMonoBehaviour<RemoteCommander>, IInitial
         Initialize();
     }
 
+    public virtual string Initialize(int value) { return null; }
+
     public virtual bool Initialize()
     {
         if (this.IsInitialized)

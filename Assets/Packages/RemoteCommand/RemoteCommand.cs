@@ -10,14 +10,11 @@ public class RemoteCommand : Attribute
     // CAUTION:
     // ID must be unique.
 
-    int id;
+    string id;
 
-    public int ID
+    public string ID
     {
-        get
-        {
-            return this.id;
-        }
+        get { return this.id; }
         set
         {
             if (!this.IsInitialized)
@@ -42,6 +39,11 @@ public class RemoteCommand : Attribute
         if (this.IsInitialized)
         {
             return false;
+        }
+
+        if (this.ID == null)
+        {
+            this.ID = methodInfo.Name;
         }
 
         this.Instance = instance;
