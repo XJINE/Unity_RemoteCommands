@@ -8,14 +8,15 @@ public class SampleA : MonoBehaviour
 
         Debug.Log("### Do Command ###");
 
-        RemoteCommander.Instance.Command(0);
+        RemoteCommander.Instance.Command("SampleCommand");
 
-        object sum = RemoteCommander.Instance.Command(1, 999, 3.14f) ?? -1;
+        object sum = RemoteCommander.Instance.Command
+                     ("SampleCommandArgsReturn", 999, 3.14f) ?? -1;
         Debug.Log(sum);
 
-        RemoteCommander.Instance.Command(2);
+        RemoteCommander.Instance.Command("SampleCommandPrivate");
 
-        RemoteCommander.Instance.Command(3);
+        RemoteCommander.Instance.Command("SampleCommandStatic");
 
         // NOTE:
         // If you want to check commands.
@@ -28,38 +29,38 @@ public class SampleA : MonoBehaviour
         //}
     }
 
-    [RemoteCommand(ID = 0)]
+    [RemoteCommand(ID = "SampleCommand")]
     public void SampleCommand()
     {
         Debug.Log("SampleCommand");
     }
 
-    [RemoteCommand(ID = 0)]
+    [RemoteCommand(ID = "SampleCommand")]
     public void SampleCommandConflict()
     {
         Debug.Log("SampleCommandConflict");
     }
 
-    [RemoteCommand(ID = 1)]
+    [RemoteCommand]
     public float SampleCommandArgsReturn(int ivalue, float fvalue)
     {
         Debug.Log("SampleCommandReturn " + ivalue + ", " + fvalue);
         return ivalue + fvalue;
     }
 
-    [RemoteCommand(ID = 2)]
+    [RemoteCommand(ID = "SampleCommandPrivate")]
     private void SampleCommandPrivate()
     {
         Debug.Log("SampleCommandPrivate");
     }
 
-    [RemoteCommand(ID = 3)]
+    [RemoteCommand(ID = "SampleCommandStatic")]
     public static void SampleCommandStatic()
     {
         Debug.Log("SampleCommandStatic");
     }
 
-    [RemoteCommand(ID = 4)]
+    [RemoteCommand(ID = "SampleCommandVirtual")]
     public virtual void SampleCommandOverride()
     {
         Debug.Log("SampleA.SampleCommandOverride");

@@ -9,14 +9,14 @@ public class SampleB : SampleA
         // NOTE:
         // These are get same result.
 
-        RemoteCommander.Instance.Command(4);
-        RemoteCommander.Instance.Command(5);
+        RemoteCommander.Instance.Command("SampleCommandVirtual");
+        RemoteCommander.Instance.Command("SampleCommandOverride");
     }
 
     // NOTE:
     // Override method doesn't inherit base RemoteCommand attribute.
 
-    [RemoteCommand(ID = 5)]
+    [RemoteCommand(ID = "SampleCommandOverride")]
     public override void SampleCommandOverride()
     {
         Debug.Log("SampleB.SampleCommandOverride");

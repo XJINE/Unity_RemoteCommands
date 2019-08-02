@@ -8,7 +8,7 @@ public class RemoteCommander : SingletonMonoBehaviour<RemoteCommander>, IInitial
 {
     #region Field
 
-    protected Dictionary<int, RemoteCommand> commands;
+    protected Dictionary<string, RemoteCommand> commands;
 
     #endregion Field
 
@@ -16,7 +16,7 @@ public class RemoteCommander : SingletonMonoBehaviour<RemoteCommander>, IInitial
 
     public bool IsInitialized { get; protected set; }
 
-    public ReadOnlyDictionary<int, RemoteCommand> Commands { get; protected set; }
+    public ReadOnlyDictionary<string, RemoteCommand> Commands { get; protected set; }
 
     #endregion Property
 
@@ -28,8 +28,6 @@ public class RemoteCommander : SingletonMonoBehaviour<RemoteCommander>, IInitial
         Initialize();
     }
 
-    public virtual string Initialize(int value) { return null; }
-
     public virtual bool Initialize()
     {
         if (this.IsInitialized)
@@ -37,7 +35,7 @@ public class RemoteCommander : SingletonMonoBehaviour<RemoteCommander>, IInitial
             return false;
         }
 
-        this.commands = new Dictionary<int, RemoteCommand>();
+        this.commands = new Dictionary<string, RemoteCommand>();
 
         var monoBehaviours = GameObject.FindObjectsOfType<MonoBehaviour>();
 
@@ -52,7 +50,7 @@ public class RemoteCommander : SingletonMonoBehaviour<RemoteCommander>, IInitial
             }
         }
 
-        this.Commands = new ReadOnlyDictionary<int, RemoteCommand>(this.commands);
+        this.Commands = new ReadOnlyDictionary<string, RemoteCommand>(this.commands);
 
         this.IsInitialized = true;
 
@@ -92,7 +90,7 @@ public class RemoteCommander : SingletonMonoBehaviour<RemoteCommander>, IInitial
         }
     }
 
-    public virtual object Command(int id, params object[] parameters)
+    public virtual object Command(string id, params object[] parameters)
     {
         if (!commands.ContainsKey(id))
         {
@@ -119,7 +117,7 @@ public class RemoteCommander : SingletonMonoBehaviour<RemoteCommander>, IInitial
                   + existingCommand.ToString() + ", " + conflictCommand.ToString());
     }
 
-    protected virtual void AlertCommandNotFound(int id)
+    protected virtual void AlertCommandNotFound(string id)
     {
         Debug.Log("Command ID '" + id + "' is not found.");
     }
