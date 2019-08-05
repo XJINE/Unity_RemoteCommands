@@ -17,33 +17,40 @@ You have to import following assets to use this asset.
 
 ## How to Use
 
-Set ``RemoteCommand`` attribute and the unique id.
+```csharp
+[RemoteCommand(ID = "SampleCommandA")]
+public void SampleCommandA()
+{
+    Debug.Log("SampleCommandA");
+}
+```
 
 ```csharp
-[RemoteCommand(ID = 0)]
-public void SampleCommand()
+RemoteCommander.Instance.Command("SampleCommandA");
+```
+
+Set ``RemoteCommand`` attribute and the unique id.
+Then, call ``RemoteCommander.Command()`` with id. That's all.
+
+```csharp
+[RemoteCommand]
+public void SampleCommandB()
 {
     Debug.Log("SampleCommand");
 }
 ```
 
-Then, call ``RemoteCommander.Command()`` with id.
-
-```csharp
-RemoteCommander.Instance.Command(0);
-```
-
-That's all.
+Function name will be set as ID when omitting it.
 
 ### Various Types
 
 ``RemoteCommand`` attribute is valid for ``public``, ``private``, ``protected`` and ``static`` methods.
 
 ```csharp
-[RemoteCommand(ID = 2)]
+[RemoteCommand]
 private void SampleCommandPrivate(){}
 
-[RemoteCommand(ID = 3)]
+[RemoteCommand]
 public static void SampleCommandStatic(){}
 ```
 
@@ -52,7 +59,7 @@ public static void SampleCommandStatic(){}
 ``Command`` method can set some args and we can get the return value.
 
 ```csharp
-[RemoteCommand(ID = 1)]
+[RemoteCommand]
 public float SampleCommandArgsReturn(int ivalue, float fvalue)
 {
     Debug.Log("SampleCommandReturn " + ivalue + ", " + fvalue);
@@ -65,7 +72,7 @@ object sum = RemoteCommander.Instance.Command(1, 999, 3.14f);
 ## Limitation
 
 ``RemoteCommand`` must be declared in ``MonoBehaviour`` (or that inheritance).
-And the instances are must be in the scene before the start.
+And the instances are must be in the scene before it starts.
 
 ``RemoteCommand.ID`` is must be unique in your scene.
 
@@ -74,7 +81,7 @@ And the instances are must be in the scene before the start.
 ```csharp
 public class SampleA : MonoBehaviour
 {
-    [RemoteCommand(ID = 4)]
+    [RemoteCommand(ID = "SampleCommandVirtual")]
     public virtual void SampleCommandOverride()
     {
         Debug.Log("SampleA.SampleCommandOverride");
@@ -82,15 +89,15 @@ public class SampleA : MonoBehaviour
 }
 public class SampleB : SampleA
 {
-    [RemoteCommand(ID = 5)]
+    [RemoteCommand(ID = "SampleCommandOverride")]
     public override void SampleCommandOverride()
     {
         Debug.Log("SampleB.SampleCommandOverride");
     }
 }
 …
-RemoteCommander.Instance.Command(4);
-RemoteCommander.Instance.Command(5);
+RemoteCommander.Instance.Command("SampleCommandVirtual");
+RemoteCommander.Instance.Command("SampleCommandOverride");
 ```
 
-When the ``Command(4)`` and ``Command(5)`` are invoked with ``SampleB``, it shows the same result.
+When the ``Command("SampleCommandVirtual")`` and ``Command("SampleCommandOverride")`` are invoked with ``SampleB`` instance, it shows the same result.

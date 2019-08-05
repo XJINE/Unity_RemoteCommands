@@ -48,13 +48,13 @@ public class SampleA : MonoBehaviour
         return ivalue + fvalue;
     }
 
-    [RemoteCommand(ID = "SampleCommandPrivate")]
+    [RemoteCommand]
     private void SampleCommandPrivate()
     {
         Debug.Log("SampleCommandPrivate");
     }
 
-    [RemoteCommand(ID = "SampleCommandStatic")]
+    [RemoteCommand]
     public static void SampleCommandStatic()
     {
         Debug.Log("SampleCommandStatic");
