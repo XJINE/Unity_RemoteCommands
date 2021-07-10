@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
@@ -90,8 +91,10 @@ public class RemoteCommander : SingletonMonoBehaviour<RemoteCommander>, IInitial
         }
     }
 
-    public virtual object Command(string id, params object[] parameters)
+    public virtual object Command(params object[] parameters)
     {
+        string id = parameters[0].ToString();
+
         if (!commands.ContainsKey(id))
         {
             AlertCommandNotFound(id);
@@ -102,6 +105,7 @@ public class RemoteCommander : SingletonMonoBehaviour<RemoteCommander>, IInitial
 
         try
         {
+            parameters = parameters.Skip(1).ToArray();
             return command.Invoke(parameters);
         }
         catch (Exception exception)
