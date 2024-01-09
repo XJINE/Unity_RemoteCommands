@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
@@ -88,18 +89,18 @@ namespace RemoteCommands
             }
         }
 
-        public virtual object Command(string id, params object[] parameters)
+        public virtual object Command(params object[] parameters)
         {
-            if (!commands.ContainsKey(id))
+            var id = parameters[0].ToString();
+
+            if (!commands.TryGetValue(id, out var command))
             {
                 AlertCommandNotFound(id);
                 return null;
             }
-
-            var command = commands[id];
-
             try
             {
+                parameters = parameters.Skip(1).ToArray();
                 return command.Invoke(parameters);
             }
             catch (Exception exception)
