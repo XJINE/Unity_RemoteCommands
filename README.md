@@ -58,7 +58,7 @@ public static void SampleCommandStatic(){}
 
 ### Args and Return Value
 
-``Command`` method can set some args and we can get the return value.
+``Command`` method can be set some args and we can get the return value from it.
 
 ```csharp
 [RemoteCommand]
@@ -68,7 +68,7 @@ public float SampleCommandArgsReturn(int ivalue, float fvalue)
     return ivalue + fvalue;
 }
 …
-object sum = RemoteCommander.Instance.Command(1, 999, 3.14f);
+object sum = RemoteCommander.Instance.Command("SampleCommandArgsReturn", 999, 3.14f);
 ```
 
 ## Limitation
