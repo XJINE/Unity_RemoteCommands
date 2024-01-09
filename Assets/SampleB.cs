@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using RemoteCommands;
 
 public class SampleB : SampleA
 {

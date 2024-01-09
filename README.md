@@ -1,16 +1,18 @@
-# Unity_RemoteCommand
+# Unity_RemoteCommands
 
-``RemoteCommand`` provides a simple logic to execute your methods from remote.
+``RemoteCommands`` provides a simple logic to execute your methods from remote.
 
-## Import to Your Project
+## Importing
 
-You can import this asset from UnityPackage.
+You can use Package Manager or import it directly.
 
-- [RemoteCommand.unitypackage](https://github.com/XJINE/Unity_RemoteCommand/blob/master/RemoteCommand.unitypackage)
+```
+https://github.com/XJINE/Unity_RemoteCommands.git?path=Assets/Packages/RemoteCommands
+```
 
 ### Dependencies
 
-You have to import following assets to use this asset.
+This project use following resources.
 
 - [Unity_SingletonMonoBehaviour](https://github.com/XJINE/Unity_SingletonMonoBehaviour)
 - [Unity_IInitializable](https://github.com/XJINE/Unity_IInitializable)

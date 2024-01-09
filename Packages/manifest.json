@@ -1,8 +1,13 @@
 {
   "dependencies": {
-    "com.unity.multiplayer-hlapi": "1.0.2",
-    "com.unity.package-manager-ui": "2.1.2",
+    "com.unity.ide.rider": "3.0.27",
+    "com.unity.ide.visualstudio": "2.0.22",
+    "com.unity.ide.vscode": "1.2.5",
+    "com.unity.test-framework": "1.1.33",
+    "com.xjine.iinitializable": "https://github.com/XJINE/Unity_IInitializable.git?path=Assets/Packages/IInitializable",
+    "com.xjine.singleton_mono_behaviour": "https://github.com/XJINE/Unity_SingletonMonoBehaviour.git?path=Assets/Packages/SingletonMonoBehaviour",
     "com.unity.modules.ai": "1.0.0",
+    "com.unity.modules.androidjni": "1.0.0",
     "com.unity.modules.animation": "1.0.0",
     "com.unity.modules.assetbundle": "1.0.0",
     "com.unity.modules.audio": "1.0.0",

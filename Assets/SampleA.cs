@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using RemoteCommands;
 
 public class SampleA : MonoBehaviour
 {
@@ -10,8 +11,7 @@ public class SampleA : MonoBehaviour
 
         RemoteCommander.Instance.Command("SampleCommand");
 
-        object sum = RemoteCommander.Instance.Command
-                     ("SampleCommandArgsReturn", 999, 3.14f) ?? -1;
+        var sum = RemoteCommander.Instance.Command("SampleCommandArgsReturn", 999, 3.14f) ?? -1;
         Debug.Log(sum);
 
         RemoteCommander.Instance.Command("SampleCommandPrivate");

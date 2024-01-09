@@ -1,0 +1,17 @@
+{
+    "name": "RemoteCommands",
+    "rootNamespace": "",
+    "references": [
+        "GUID:6ed662c2b95a69d429187ea01728b9b3",
+        "GUID:43dd3f0c7ecda0f40b03f362c16f8cce"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
