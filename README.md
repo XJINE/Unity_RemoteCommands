@@ -19,20 +19,21 @@ This project use following resources.
 
 ## How to Use
 
+Set ``RemoteCommand`` attribute and the unique id.
+Then, call ``RemoteCommander.Command()`` with id. That's all.
+
+
 ```csharp
 [RemoteCommand(ID = "SampleCommandA")]
 public void SampleCommandA()
 {
     Debug.Log("SampleCommandA");
 }
-```
 
-```csharp
 RemoteCommander.Instance.Command("SampleCommandA");
 ```
 
-Set ``RemoteCommand`` attribute and the unique id.
-Then, call ``RemoteCommander.Command()`` with id. That's all.
+Function name will be set as ID when omitting it.
 
 ```csharp
 [RemoteCommand]
@@ -41,8 +42,6 @@ public void SampleCommandB()
     Debug.Log("SampleCommand");
 }
 ```
-
-Function name will be set as ID when omitting it.
 
 ### Various Types
 
@@ -67,7 +66,7 @@ public float SampleCommandArgsReturn(int ivalue, float fvalue)
     Debug.Log("SampleCommandReturn " + ivalue + ", " + fvalue);
     return ivalue + fvalue;
 }
-…
+
 object sum = RemoteCommander.Instance.Command("SampleCommandArgsReturn", 999, 3.14f);
 ```
 
