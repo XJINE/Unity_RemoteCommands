@@ -102,3 +102,4 @@ RemoteCommander.Instance.Command("SampleCommandOverride");
 ```
 
 When the ``Command("SampleCommandVirtual")`` and ``Command("SampleCommandOverride")`` are invoked with ``SampleB`` instance, it shows the same result.
+The results are ``"SampleB.SampleCommandOverride"``.
