@@ -18,15 +18,16 @@ public class SampleA : MonoBehaviour
 
         RemoteCommander.Instance.Command("SampleCommandStatic");
 
-        // NOTE:
-        // If you want to check commands.
+        var addManual = new RemoteCommand();
+            addManual.Initialize(this, this.GetType().GetMethod(nameof(SampleCommandAddManual)));
+        RemoteCommander.Instance.AddCommand(addManual);
+        RemoteCommander.Instance.Command(nameof(SampleCommandAddManual));
 
-        //Debug.Log("### Command List ###");
-        //
-        //foreach (var command in RemoteCommander.Instance.Commands)
-        //{
-        //    Debug.Log(command.Key + " : " + command.Value);
-        //}
+        Debug.Log("### Command List ###");
+        foreach (var command in RemoteCommander.Instance.Commands)
+        {
+            Debug.Log(command.Key + " : " + command.Value);
+        }
     }
 
     [RemoteCommand(ID = "SampleCommand")]
@@ -64,5 +65,10 @@ public class SampleA : MonoBehaviour
     public virtual void SampleCommandOverride()
     {
         Debug.Log("SampleA.SampleCommandOverride");
+    }
+
+    public void SampleCommandAddManual()
+    {
+        Debug.Log(nameof(SampleCommandAddManual));
     }
 }

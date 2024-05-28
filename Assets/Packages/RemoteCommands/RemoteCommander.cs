@@ -11,7 +11,7 @@ namespace RemoteCommands
     {
         #region Field
 
-        protected Dictionary<string, RemoteCommand> commands;
+        private Dictionary<string, RemoteCommand> _commands;
 
         #endregion Field
 
@@ -25,9 +25,10 @@ namespace RemoteCommands
 
         #region Method
 
-        protected override void Awake()
+        protected virtual void Start()
         {
-            base.Awake();
+            // CAUTION:
+            // To scan other objects, Initialize shouldn't be called in Awake.
             Initialize();
         }
 
@@ -40,8 +41,8 @@ namespace RemoteCommands
 
             IsInitialized = true;
 
-            commands = new Dictionary<string, RemoteCommand>();
-            Commands = new ReadOnlyDictionary<string, RemoteCommand>(commands);
+            _commands = new Dictionary<string, RemoteCommand>();
+            Commands  = new ReadOnlyDictionary<string, RemoteCommand>(_commands);
 
             foreach (var monoBehaviour in FindObjectsOfType<MonoBehaviour>())
             { 
@@ -79,13 +80,10 @@ namespace RemoteCommands
 
                 remoteCommand.Initialize(instance, methodInfo);
 
-                if (commands.ContainsKey(remoteCommand.ID))
+                if (!_commands.TryAdd(remoteCommand.ID, remoteCommand))
                 {
-                    AlertIDConflict(commands[remoteCommand.ID], remoteCommand);
-                    continue;
+                    AlertIDConflict(_commands[remoteCommand.ID], remoteCommand);
                 }
-
-                commands.Add(remoteCommand.ID, remoteCommand);
             }
         }
 
@@ -93,7 +91,7 @@ namespace RemoteCommands
         {
             var id = parameters[0].ToString();
 
-            if (!commands.TryGetValue(id, out var command))
+            if (!_commands.TryGetValue(id, out var command))
             {
                 AlertCommandNotFound(id);
                 return null;
@@ -108,6 +106,23 @@ namespace RemoteCommands
                 AlertInvokeError(command, exception);
                 return null;
             }
+        }
+
+        public bool AddCommand(RemoteCommand command)
+        {
+            if (!command.IsInitialized)
+            {
+                Debug.Log("command is not initialized.");
+                return false;
+            }
+
+            if (!_commands.TryAdd(command.ID, command))
+            {
+                AlertIDConflict(_commands[command.ID], command);
+                return false;
+            }
+
+            return true;
         }
 
         protected virtual void AlertIDConflict(RemoteCommand existingCommand, RemoteCommand conflictCommand)
