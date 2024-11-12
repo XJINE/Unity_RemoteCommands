@@ -1,15 +1,12 @@
 ﻿using UnityEngine;
 using RemoteCommands;
 
-public class SampleB : SampleA
+public class OverrideSampleDerived : OverrideSampleBase
 {
-    protected override void Start()
+    private void Start()
     {
-        base.Start();
-
         // NOTE:
         // These are get same result.
-
         RemoteCommander.Instance.Command("SampleCommandVirtual");
         RemoteCommander.Instance.Command("SampleCommandOverride");
     }
@@ -17,9 +14,9 @@ public class SampleB : SampleA
     // NOTE:
     // Override method doesn't inherit base RemoteCommand attribute.
 
-    [RemoteCommand(ID = "SampleCommandOverride")]
+    [RemoteCommand]
     public override void SampleCommandOverride()
     {
-        Debug.Log("SampleB.SampleCommandOverride");
+        Debug.Log(nameof(OverrideSampleDerived) + "." + nameof(SampleCommandOverride) + " is called.");
     }
 }

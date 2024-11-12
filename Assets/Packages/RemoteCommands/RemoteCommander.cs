@@ -63,13 +63,13 @@ namespace RemoteCommands
             // NOTE:
             // DeclaredOnly needs to avoid conflict in inherit class.
 
-            var methodInfos = type.GetMethods(BindingFlags.Public
+            var memberInfos = type.GetMembers(BindingFlags.Public
                                             | BindingFlags.NonPublic
                                             | BindingFlags.Instance
                                             | BindingFlags.Static
                                             | BindingFlags.DeclaredOnly);
 
-            foreach (var methodInfo in methodInfos)
+            foreach (var methodInfo in memberInfos)
             {
                 var remoteCommand = Attribute.GetCustomAttribute(methodInfo, typeof(RemoteCommand)) as RemoteCommand;
 
