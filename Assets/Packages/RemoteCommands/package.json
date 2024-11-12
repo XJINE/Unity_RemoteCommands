@@ -1,7 +1,7 @@
 {
     "name"       : "com.xjine.remote_commands",
     "displayName": "Remote Commands", 
-    "version"    : "2.0.0",
+    "version"    : "2.1.0",
     "unity"      : "2022.3",
     "description": "RemoteCommands provides a simple logic to execute your methods from remote.",
     "author"     :
