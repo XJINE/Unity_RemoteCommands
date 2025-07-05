@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Reflection;
+using System.Security.Cryptography;
+using System.Text;
 using UnityEngine;
 
 namespace RemoteCommands {
@@ -8,16 +10,14 @@ public class RemoteCommand : Attribute
 {
     #region Property
 
-    // CAUTION:
-    // ID must be unique.
-
-    private string _id;
-    public string ID
+    private string _id; // ID must be unique.
+    public  string ID
     {
         get => _id;
         set { if (!IsInitialized) { _id = value; } }
     }
 
+    public int           Hash          { get; private set; }
     public bool          IsInitialized { get; private set; }
     public MonoBehaviour Instance      { get; private set; }
     public MemberInfo    MemberInfo    { get; private set; }
@@ -26,15 +26,15 @@ public class RemoteCommand : Attribute
 
     #region Method
 
-    public bool Initialize(MonoBehaviour instance, MemberInfo memberInfo)
+    public bool Initialize(MonoBehaviour instance, MemberInfo memberInfo, string id = null)
     {
         if (IsInitialized)
         {
             return false;
         }
 
-        ID ??= memberInfo.Name;
-
+        ID          ??= id ?? memberInfo.Name;
+        Hash          = ComputeHash(ID);
         Instance      = instance;
         MemberInfo    = memberInfo;
         IsInitialized = true;
@@ -47,12 +47,12 @@ public class RemoteCommand : Attribute
         switch (MemberInfo.MemberType)
         {
             case MemberTypes.Field:
-                var fieldInfo = ((FieldInfo)MemberInfo);
+                var fieldInfo = (FieldInfo)MemberInfo;
                     fieldInfo.SetValue(Instance, parameters[0]);
              return fieldInfo.GetValue(Instance);
 
             case MemberTypes.Property:
-                var propertyInfo = ((PropertyInfo)MemberInfo);
+                var propertyInfo = (PropertyInfo)MemberInfo;
                     propertyInfo.SetValue(Instance, parameters[0]);
              return propertyInfo.GetValue(Instance);
             
@@ -65,7 +65,15 @@ public class RemoteCommand : Attribute
 
     public override string ToString()
     {
-        return MemberInfo.ReflectedType.Name + "." + MemberInfo.Name;
+        return $"{MemberInfo?.ReflectedType?.Name}.{MemberInfo?.Name}";
+    }
+
+    private static int ComputeHash(string id)
+    {
+        using var sha256  = SHA256.Create();
+              var hash = sha256.ComputeHash(Encoding.UTF8.GetBytes(id));
+
+        return BitConverter.ToInt32(hash);
     }
 
     #endregion Method

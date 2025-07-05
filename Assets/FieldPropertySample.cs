@@ -19,7 +19,7 @@ public class FieldPropertySample : MonoBehaviour
         }
     }
 
-    void Start()
+    private void Start()
     {
         RemoteCommander.Instance.Initialize();
         Debug.Log(RemoteCommander.Instance.Command(nameof(sampleIntField),      123));
