@@ -14,12 +14,12 @@ public class RemoteCommander : SingletonMonoBehaviour<RemoteCommander>, IInitial
     // the risk of conflict is quite low.
     // If a conflict occurs, change the ID to resolve it.
 
-    private Dictionary<string, RemoteCommand> _commands;
+    private Dictionary<string, RemoteCommandAttribute> _commands;
     private Dictionary<   int,        string> _commandHashes;
 
     public bool IsInitialized { get; protected set; }
 
-    public ReadOnlyDictionary<string, RemoteCommand> Commands      { get; private set; }
+    public ReadOnlyDictionary<string, RemoteCommandAttribute> Commands      { get; private set; }
     public ReadOnlyDictionary<   int,        string> CommandHashes { get; private set; }
 
     protected void Start()
@@ -38,13 +38,13 @@ public class RemoteCommander : SingletonMonoBehaviour<RemoteCommander>, IInitial
 
         IsInitialized = true;
 
-        _commands = new Dictionary        <string, RemoteCommand>();
-        Commands  = new ReadOnlyDictionary<string, RemoteCommand>(_commands);
+        _commands = new Dictionary        <string, RemoteCommandAttribute>();
+        Commands  = new ReadOnlyDictionary<string, RemoteCommandAttribute>(_commands);
 
         _commandHashes = new Dictionary        <int, string>();
         CommandHashes  = new ReadOnlyDictionary<int, string>(_commandHashes);
 
-        foreach (var monoBehaviour in FindObjectsOfType<MonoBehaviour>(includeInactive:true))
+        foreach (var monoBehaviour in FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None))
         { 
             var type = monoBehaviour.GetType();
 
@@ -69,20 +69,20 @@ public class RemoteCommander : SingletonMonoBehaviour<RemoteCommander>, IInitial
                                         | BindingFlags.Static
                                         | BindingFlags.DeclaredOnly);
 
-        foreach (var methodInfo in memberInfos)
+        foreach (var memberInfo in memberInfos)
         {
-            if (Attribute.GetCustomAttribute(methodInfo, typeof(RemoteCommand)) is not RemoteCommand remoteCommand)
+            if (Attribute.GetCustomAttribute(memberInfo, typeof(RemoteCommandAttribute)) is not RemoteCommandAttribute remoteCommand)
             {
                 continue;
             }
 
-            remoteCommand.Initialize(instance, methodInfo);
+            remoteCommand.Initialize(instance, memberInfo);
 
             RegisterCommand(remoteCommand);
         }
     }
 
-    public bool RegisterCommand(RemoteCommand command)
+    public bool RegisterCommand(RemoteCommandAttribute command)
     {
         if (!command.IsInitialized)
         {

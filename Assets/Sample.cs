@@ -16,7 +16,7 @@ public class Sample : MonoBehaviour
 
         Debug.Log("### Add Command Manually ###");
 
-        var addManually = new RemoteCommand();
+        var addManually = new RemoteCommandAttribute();
             addManually.Initialize(this, GetType().GetMethod(nameof(SampleCommandAddManually)));
         RemoteCommander.Instance.RegisterCommand(addManually);
         RemoteCommander.Instance.Command(nameof(SampleCommandAddManually));

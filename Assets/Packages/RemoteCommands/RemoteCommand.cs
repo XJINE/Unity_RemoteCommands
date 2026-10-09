@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Reflection;
-using System.Security.Cryptography;
-using System.Text;
 using UnityEngine;
 
 namespace RemoteCommands {
 [AttributeUsage(AttributeTargets.Method | AttributeTargets.Field | AttributeTargets.Property, Inherited = false)]
-public class RemoteCommand : Attribute
+public class RemoteCommandAttribute : Attribute
 {
     private string _id; // ID must be unique.
     public  string ID
@@ -64,9 +62,20 @@ public class RemoteCommand : Attribute
 
     private static int ComputeHash(string id)
     {
-        using var sha256  = SHA256.Create();
-              var hash = sha256.ComputeHash(Encoding.UTF8.GetBytes(id));
+        unchecked
+        {
+            const uint fnvOffsetBasis = 2166136261;
+            const uint fnvPrime       = 16777619;
 
-        return BitConverter.ToInt32(hash);
+            var hash = fnvOffsetBasis;
+
+            foreach (var c in id)
+            {
+                hash ^= c;
+                hash *= fnvPrime;
+            }
+
+            return (int)hash;
+        }
     }
 }}
