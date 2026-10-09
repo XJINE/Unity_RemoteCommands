@@ -15,12 +15,12 @@ public class RemoteCommander : SingletonMonoBehaviour<RemoteCommander>, IInitial
     // If a conflict occurs, change the ID to resolve it.
 
     private Dictionary<string, RemoteCommandAttribute> _commands;
-    private Dictionary<   int,        string> _commandHashes;
+    private Dictionary<   int,                 string> _commandHashes;
 
     public bool IsInitialized { get; protected set; }
 
     public ReadOnlyDictionary<string, RemoteCommandAttribute> Commands      { get; private set; }
-    public ReadOnlyDictionary<   int,        string> CommandHashes { get; private set; }
+    public ReadOnlyDictionary<   int,                 string> CommandHashes { get; private set; }
 
     protected void Start()
     {
