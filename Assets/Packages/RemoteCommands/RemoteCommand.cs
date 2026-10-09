@@ -8,8 +8,6 @@ namespace RemoteCommands {
 [AttributeUsage(AttributeTargets.Method | AttributeTargets.Field | AttributeTargets.Property, Inherited = false)]
 public class RemoteCommand : Attribute
 {
-    #region Property
-
     private string _id; // ID must be unique.
     public  string ID
     {
@@ -21,10 +19,6 @@ public class RemoteCommand : Attribute
     public bool          IsInitialized { get; private set; }
     public MonoBehaviour Instance      { get; private set; }
     public MemberInfo    MemberInfo    { get; private set; }
-
-    #endregion Property
-
-    #region Method
 
     public bool Initialize(MonoBehaviour instance, MemberInfo memberInfo, string id = null)
     {
@@ -75,6 +69,4 @@ public class RemoteCommand : Attribute
 
         return BitConverter.ToInt32(hash);
     }
-
-    #endregion Method
 }}

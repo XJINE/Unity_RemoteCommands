@@ -14,23 +14,13 @@ public class RemoteCommander : SingletonMonoBehaviour<RemoteCommander>, IInitial
     // the risk of conflict is quite low.
     // If a conflict occurs, change the ID to resolve it.
 
-    #region Field
-
     private Dictionary<string, RemoteCommand> _commands;
     private Dictionary<   int,        string> _commandHashes;
-
-    #endregion Field
-
-    #region Property
 
     public bool IsInitialized { get; protected set; }
 
     public ReadOnlyDictionary<string, RemoteCommand> Commands      { get; private set; }
     public ReadOnlyDictionary<   int,        string> CommandHashes { get; private set; }
-
-    #endregion Property
-
-    #region Method
 
     protected void Start()
     {
@@ -58,7 +48,7 @@ public class RemoteCommander : SingletonMonoBehaviour<RemoteCommander>, IInitial
         { 
             var type = monoBehaviour.GetType();
 
-            while (type != null)
+            while (type != null && type != typeof(MonoBehaviour))
             {
                 RegisterCommands(monoBehaviour, type);
                 type = type.BaseType;
@@ -150,6 +140,4 @@ public class RemoteCommander : SingletonMonoBehaviour<RemoteCommander>, IInitial
 
         return null;
     }
-
-    #endregion Method
 }}
